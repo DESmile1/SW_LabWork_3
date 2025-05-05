@@ -1,0 +1,54 @@
+@startuml
+entity Пользователь {
+  * id : integer <<generated>>
+  --
+  * имя : varchar(100)
+  * email : varchar(255)
+}
+
+entity Сотрудник {
+  * id : integer <<generated>>
+  * пользователь_id : integer <<FK>>
+  --
+  * должность : varchar(100)
+}
+
+entity Меню {
+  * id : integer <<generated>>
+  --
+  * дата : date
+  * тип_кухни : varchar(50)
+  * сотрудник_id : integer <<FK>>
+}
+
+entity Блюдо {
+  * id : integer <<generated>>
+  * меню_id : integer <<FK>>
+  --
+  * название : varchar(50)
+  * цена : decimal(10,2)
+}
+
+entity Заказ {
+  * id : integer <<generated>>
+  * пользователь_id : integer <<FK>>
+  --
+  * дата : date
+  * статус : varchar(20)
+}
+
+entity Заказ_Блюдо {
+  * id : integer <<generated>>
+  * заказ_id : integer <<FK>>
+  * блюдо_id : integer <<FK>>
+  --
+  * количество : integer
+}
+
+Пользователь ||--o{ Сотрудник
+Сотрудник ||--o{ Меню
+Меню ||--o{ Блюдо
+Пользователь ||--o{ Заказ
+Заказ }o--|| Заказ_Блюдо
+Блюдо }o--|| Заказ_Блюдо
+@enduml
